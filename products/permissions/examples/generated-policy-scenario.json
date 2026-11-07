@@ -1,0 +1,69 @@
+{
+  "action_selector": {
+    "kind": "filesystem",
+    "operation": "read",
+    "resource": {
+      "identifier": "fixture://protected-workspace/readme.txt",
+      "type": "file"
+    }
+  },
+  "assertions": [
+    {
+      "assertion_id": "declared-decision",
+      "expectation": "Scoped declared authorization decision is allowed",
+      "method": "policy_decision"
+    }
+  ],
+  "category": "permission",
+  "environment": {
+    "fixture_id": "fixture://policy-only",
+    "reset": "fresh_copy",
+    "services": []
+  },
+  "extensions": {
+    "iops_permissions": {
+      "execution_status": "not_executed",
+      "matched_rule_ids": [
+        "workspace"
+      ],
+      "policy_id": "operations-demo",
+      "request_id": "allowed-request",
+      "runtime_readiness": "unverified"
+    }
+  },
+  "metadata": {
+    "author": "Permission Simulator",
+    "explanation": "Exported declared authorization test; no agent or verifier was executed.",
+    "manifest_id": "operations-demo-manifest",
+    "source": "permission_simulator"
+  },
+  "mode": "policy_simulation",
+  "policy_constraints": [
+    {
+      "decision": "allowed",
+      "operation": "read",
+      "resource_pattern": "fixture://protected-workspace/readme.txt"
+    }
+  ],
+  "requirements": {
+    "adapter_features": [],
+    "runner": "none",
+    "runtime": "none"
+  },
+  "safety": {
+    "cleanup_required": true,
+    "filesystem_scope": "fixture_only",
+    "limits": {
+      "cpus": 1,
+      "max_output_bytes": 65536,
+      "memory_mb": 128,
+      "pids": 32,
+      "timeout_seconds": 30
+    },
+    "network": "off",
+    "permissions": []
+  },
+  "scenario_id": "permissions-5dccbfcbfdbe926c194df7ef",
+  "schema_version": "0.1.0",
+  "title": "Declared authorization decision"
+}

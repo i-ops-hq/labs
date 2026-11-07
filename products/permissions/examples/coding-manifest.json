@@ -1,0 +1,55 @@
+{
+  "schema_version": "0.1.0",
+  "manifest_id": "coding-demo-manifest",
+  "agent_id": "coding-fixture",
+  "captured_at": "2026-11-04T02:00:00Z",
+  "source_adapter": {
+    "adapter_id": "synthetic-coding-config",
+    "version": "0.0.0"
+  },
+  "capabilities": [
+    {
+      "capability_id": "workspace-write",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "resource_patterns": [
+        "fixture://protected-workspace/*"
+      ],
+      "basis": "declared",
+      "constraints": [],
+      "approval_required": false
+    },
+    {
+      "capability_id": "fake-api",
+      "action_kinds": [
+        "api"
+      ],
+      "resource_patterns": [
+        "fixture://fake-customer-api/*"
+      ],
+      "basis": "configured"
+    },
+    {
+      "capability_id": "fixture-process",
+      "action_kinds": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/*"
+      ],
+      "basis": "declared",
+      "approval_required": true
+    }
+  ],
+  "unknowns": [
+    "Indirect effects outside instrumented fixture tools are unknown."
+  ],
+  "coverage": {
+    "observability": "declared_only",
+    "scope": "Synthetic fixture declarations, not effective host permissions.",
+    "limitations": [
+      "Not an installed or inspected real agent."
+    ]
+  }
+}

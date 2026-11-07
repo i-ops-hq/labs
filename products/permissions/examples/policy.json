@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1.0",
+  "policy_id": "operations-demo",
+  "agent_ids": [
+    "python-ops-fixture",
+    "coding-fixture"
+  ],
+  "default_decision": "unknown",
+  "rules": [
+    {
+      "rule_id": "workspace",
+      "effect": "allowed",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "operations": [
+        "read",
+        "write",
+        "delete"
+      ],
+      "resource_types": [
+        "file"
+      ],
+      "resource_patterns": [
+        "fixture://protected-workspace/*"
+      ]
+    },
+    {
+      "rule_id": "protect-file",
+      "effect": "denied",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "operations": [
+        "write",
+        "delete"
+      ],
+      "resource_types": [
+        "file"
+      ],
+      "resource_patterns": [
+        "fixture://protected-workspace/protected.txt"
+      ]
+    },
+    {
+      "rule_id": "approve-delete",
+      "effect": "requires_approval",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "operations": [
+        "delete"
+      ],
+      "resource_types": [
+        "file"
+      ],
+      "resource_patterns": [
+        "fixture://protected-workspace/*"
+      ]
+    },
+    {
+      "rule_id": "fake-api-update",
+      "effect": "allowed",
+      "action_kinds": [
+        "api"
+      ],
+      "operations": [
+        "update"
+      ],
+      "resource_types": [
+        "record"
+      ],
+      "resource_patterns": [
+        "fixture://fake-customer-api/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "valid": [
+    {
+      "file": "valid/custom-python-manifest.json",
+      "contract": "capability-manifest"
+    },
+    {
+      "file": "valid/coding-agent-manifest.json",
+      "contract": "capability-manifest"
+    },
+    {
+      "file": "valid/protected-file-write.json",
+      "contract": "scenario-definition"
+    },
+    {
+      "file": "valid/fake-api-partial-failure.json",
+      "contract": "scenario-definition"
+    },
+    {
+      "file": "valid/policy-only-write.json",
+      "contract": "scenario-definition"
+    },
+    {
+      "file": "valid/attempted-write.json",
+      "contract": "action-event"
+    },
+    {
+      "file": "valid/completed-write.json",
+      "contract": "action-event"
+    },
+    {
+      "file": "valid/verified-state.json",
+      "contract": "action-event"
+    },
+    {
+      "file": "valid/denied-write.json",
+      "contract": "action-event"
+    },
+    {
+      "file": "valid/reference-result-passed.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/reference-result-failed.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/reference-result-inconclusive.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/reference-result-unsupported.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/reference-result-skipped.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/reference-result-error.json",
+      "contract": "evidence-result"
+    },
+    {
+      "file": "valid/action-event-extension.json",
+      "contract": "action-event"
+    },
+    {
+      "file": "valid/capability-manifest-extension.json",
+      "contract": "capability-manifest"
+    },
+    {
+      "file": "valid/scenario-definition-extension.json",
+      "contract": "scenario-definition"
+    },
+    {
+      "file": "valid/evidence-result-extension.json",
+      "contract": "evidence-result"
+    }
+  ],
+  "invalid": [
+    {
+      "file": "invalid/action-event-missing-version.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/action-event-future-version.json",
+      "contract": "action-event",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/action-event-unknown-patch.json",
+      "contract": "action-event",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/action-event-invalid-enum.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/action-event-unknown-field.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/action-event-invalid-timestamp.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/capability-manifest-missing-version.json",
+      "contract": "capability-manifest",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/capability-manifest-future-version.json",
+      "contract": "capability-manifest",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/capability-manifest-unknown-patch.json",
+      "contract": "capability-manifest",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/capability-manifest-invalid-enum.json",
+      "contract": "capability-manifest",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/capability-manifest-unknown-field.json",
+      "contract": "capability-manifest",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/capability-manifest-invalid-timestamp.json",
+      "contract": "capability-manifest",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-definition-missing-version.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-definition-future-version.json",
+      "contract": "scenario-definition",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/scenario-definition-unknown-patch.json",
+      "contract": "scenario-definition",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/scenario-definition-invalid-enum.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-definition-unknown-field.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/evidence-result-missing-version.json",
+      "contract": "evidence-result",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/evidence-result-future-version.json",
+      "contract": "evidence-result",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/evidence-result-unknown-patch.json",
+      "contract": "evidence-result",
+      "expected_code": "unsupported_version"
+    },
+    {
+      "file": "invalid/evidence-result-invalid-enum.json",
+      "contract": "evidence-result",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/evidence-result-unknown-field.json",
+      "contract": "evidence-result",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/evidence-result-invalid-timestamp.json",
+      "contract": "evidence-result",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-host-network.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-command.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/scenario-missing-execution-target.json",
+      "contract": "scenario-definition",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/attempt-is-not-success.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/verification-needs-evidence.json",
+      "contract": "action-event",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/result-dangling-evidence.json",
+      "contract": "evidence-result",
+      "expected_code": "invalid_reference"
+    },
+    {
+      "file": "invalid/result-reversed-time.json",
+      "contract": "evidence-result",
+      "expected_code": "timestamp_order"
+    },
+    {
+      "file": "invalid/result-failed-without-failure.json",
+      "contract": "evidence-result",
+      "expected_code": "verdict_mismatch"
+    },
+    {
+      "file": "invalid/result-error-is-not-pass.json",
+      "contract": "evidence-result",
+      "expected_code": "schema_violation"
+    },
+    {
+      "file": "invalid/result-duplicate-artifact.json",
+      "contract": "evidence-result",
+      "expected_code": "duplicate_id"
+    }
+  ]
+}

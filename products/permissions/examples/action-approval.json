@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "request_id": "approval-request",
+  "agent_id": "python-ops-fixture",
+  "action": {
+    "kind": "filesystem",
+    "operation": "delete",
+    "resource": {
+      "type": "file",
+      "identifier": "fixture://protected-workspace/scratch.txt"
+    }
+  }
+}

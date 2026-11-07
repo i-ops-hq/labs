@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "request_id": "api-request",
+  "agent_id": "python-ops-fixture",
+  "action": {
+    "kind": "api",
+    "operation": "update",
+    "resource": {
+      "type": "record",
+      "identifier": "fixture://fake-customer-api/customer-1"
+    }
+  }
+}

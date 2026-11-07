@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iops-permissions:policy:0.1.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "agent_ids": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          {
+            "const": "*"
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "default_decision": {
+      "enum": [
+        "allowed",
+        "denied",
+        "requires_approval",
+        "unknown"
+      ]
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "effect": {
+            "enum": [
+              "allowed",
+              "denied",
+              "requires_approval",
+              "unknown"
+            ]
+          },
+          "action_kinds": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "filesystem",
+                "process",
+                "network",
+                "api",
+                "other",
+                "*"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(\\*|[a-z][a-z0-9_.-]{0,63})$"
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "resource_types": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "file",
+                "directory",
+                "process",
+                "endpoint",
+                "record",
+                "other",
+                "*"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          },
+          "resource_patterns": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "minItems": 1,
+            "maxItems": 64,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "rule_id",
+          "effect",
+          "action_kinds",
+          "operations",
+          "resource_types",
+          "resource_patterns"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "schema_version",
+    "policy_id",
+    "agent_ids",
+    "default_decision",
+    "rules"
+  ],
+  "additionalProperties": false
+}

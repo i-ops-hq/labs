@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "agent_id": "custom-ops-agent",
+  "kind": "python_tools",
+  "argv": [
+    "agent.py"
+  ],
+  "files": [
+    "agent.py"
+  ]
+}

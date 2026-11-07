@@ -1,0 +1,35 @@
+{
+  "manifest_id": "manifest-python-ops",
+  "agent_id": "python-ops-fixture",
+  "captured_at": "2026-11-04T02:00:00Z",
+  "source_adapter": {
+    "adapter_id": "reference-python-fixture",
+    "version": "0.0.0"
+  },
+  "capabilities": [
+    {
+      "capability_id": "workspace-write",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "resource_patterns": [
+        "fixture://protected-workspace/*"
+      ],
+      "basis": "declared",
+      "constraints": [
+        "Protected file writes require denial in this fixture."
+      ],
+      "approval_required": false
+    }
+  ],
+  "unknowns": [
+    "Indirect effects outside instrumented fixture tools are unknown."
+  ],
+  "coverage": {
+    "observability": "declared_only",
+    "scope": "Synthetic fixture declarations, not effective host permissions.",
+    "limitations": [
+      "Not an installed or inspected real agent."
+    ]
+  }
+}

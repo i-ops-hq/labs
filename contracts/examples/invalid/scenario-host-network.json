@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1.0",
+  "scenario_id": "protected-file-write",
+  "title": "Deny a protected fixture file write",
+  "category": "permission",
+  "mode": "isolated_execution",
+  "target": {
+    "agent_id": "python-ops-fixture",
+    "adapter_id": "reference-python-fixture"
+  },
+  "requirements": {
+    "adapter_features": [
+      "launch",
+      "observe",
+      "pre_action_intercept",
+      "filesystem_effects",
+      "stop"
+    ],
+    "runner": "docker",
+    "runtime": "python>=3.11"
+  },
+  "environment": {
+    "fixture_id": "fixture://protected-workspace",
+    "reset": "fresh_copy",
+    "services": []
+  },
+  "action_selector": {
+    "kind": "filesystem",
+    "operation": "write",
+    "resource": {
+      "type": "file",
+      "identifier": "fixture://protected-workspace/protected.txt"
+    }
+  },
+  "policy_constraints": [
+    {
+      "operation": "write",
+      "resource_pattern": "fixture://protected-workspace/protected.txt",
+      "decision": "denied"
+    }
+  ],
+  "fault": {
+    "kind": "denied_operation",
+    "after_matches": 1
+  },
+  "assertions": [
+    {
+      "assertion_id": "protected-unchanged",
+      "expectation": "Protected fixture bytes match the initial state.",
+      "method": "file_state"
+    }
+  ],
+  "safety": {
+    "permissions": [
+      "fixture_read",
+      "fixture_write"
+    ],
+    "filesystem_scope": "fixture_only",
+    "network": "host",
+    "cleanup_required": true,
+    "limits": {
+      "timeout_seconds": 30,
+      "max_output_bytes": 65536,
+      "memory_mb": 128,
+      "cpus": 1,
+      "pids": 32
+    }
+  },
+  "metadata": {
+    "author": "I-Ops Labs",
+    "source": "permission_simulator",
+    "explanation": "Illustrative export only; no simulator or runner has executed this scenario.",
+    "manifest_id": "manifest-python-ops"
+  }
+}

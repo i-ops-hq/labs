@@ -1,0 +1,38 @@
+# Contracts — v0.1.0 foundation
+
+These interfaces are experimental and versioned.
+Changes require a reviewed ADR and explicit compatibility treatment.
+
+| Contract | Specification | Machine representation |
+| --- | --- | --- |
+| Agent Adapter | [agent-adapter](specs/agent-adapter.md) | Typed reference protocol in reference/python |
+| Action Event | [action-event](specs/action-event.md) | schemas/v0.1/action-event.schema.json |
+| Capability Manifest | [capability-manifest](specs/capability-manifest.md) | schemas/v0.1/capability-manifest.schema.json |
+| Scenario Definition | [scenario-definition](specs/scenario-definition.md) | schemas/v0.1/scenario-definition.schema.json |
+| Evidence Result | [evidence-result](specs/evidence-result.md) | schemas/v0.1/evidence-result.schema.json |
+
+The JSON Schemas are authoritative for field types, requiredness, enum values,
+lengths and numeric bounds; the specs add semantic invariants that JSON Schema
+cannot express. docs/COMPATIBILITY.md defines reader behavior, input limits,
+version negotiation and diagnostic rules. These file contracts do not install
+a shared runtime engine or a third product.
+
+`examples/index.json` lists all 19 positive and 33 negative fixtures with their
+contract and, for negative examples, expected error code. All examples use
+synthetic identities. Every result is hand-authored reference data, explicitly
+marked as not executed; artifact locators are illustrative and no hash is
+invented. Positive/negative validity refers to serialization, not agent safety.
+
+The linked example is custom-python-manifest → protected-file-write →
+reference-result-passed, with attempted-write/completed-write/verified-state
+illustrating distinct event stages. fake-api-partial-failure models an in-process
+fake service and duplicate retry assertions without any real endpoint.
+
+Run the source-tree contract matrix from the Labs root with `uv run --frozen
+pytest -q`. Run `uv run python scripts/sync_contracts.py --check` to repeat the
+same fixtures against four isolated wheel/sdist installations. Neither executes
+an agent or demonstrates an enforcement integration.
+
+Current product execution coverage and observed reports are documented in
+docs/INTEGRATIONS.md. Contract fixtures remain illustrative;
+they are not relabeled as executed evidence when an implementation is added.

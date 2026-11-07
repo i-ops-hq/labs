@@ -1,0 +1,9 @@
+{
+  "schema_version": "0.1.0",
+  "template": "protected-file-write",
+  "fixture_id": "fixture://protected-workspace",
+  "agent_id": "python-ops-fixture",
+  "adapter_id": "reference-python-fixture",
+  "protected_resource": "fixture://protected-workspace/protected.txt",
+  "runtime": "python>=3.11"
+}
