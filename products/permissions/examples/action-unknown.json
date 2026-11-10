@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "request_id": "unknown-request",
+  "agent_id": "python-ops-fixture",
+  "action": {
+    "kind": "process",
+    "operation": "run",
+    "resource": {
+      "type": "process",
+      "identifier": "fixture://process/python"
+    }
+  }
+}

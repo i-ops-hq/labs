@@ -1,0 +1,59 @@
+{
+  "schema_version": "0.1.0",
+  "policy_id": "declared-breadth-demo",
+  "agent_ids": [
+    "shell-capable-fixture"
+  ],
+  "default_decision": "unknown",
+  "rules": [
+    {
+      "rule_id": "repo-writes",
+      "effect": "allowed",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "operations": [
+        "read",
+        "write"
+      ],
+      "resource_types": [
+        "file"
+      ],
+      "resource_patterns": [
+        "fixture://repo/*"
+      ]
+    },
+    {
+      "rule_id": "test-command",
+      "effect": "allowed",
+      "action_kinds": [
+        "process"
+      ],
+      "operations": [
+        "execute"
+      ],
+      "resource_types": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/test-cmd"
+      ]
+    },
+    {
+      "rule_id": "no-push",
+      "effect": "denied",
+      "action_kinds": [
+        "process"
+      ],
+      "operations": [
+        "execute"
+      ],
+      "resource_types": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/git-push"
+      ]
+    }
+  ]
+}

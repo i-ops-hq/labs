@@ -1,0 +1,62 @@
+{
+  "action_selector": {
+    "kind": "process",
+    "operation": "execute",
+    "resource": {
+      "type": "process",
+      "identifier": "fixture://command-workspace/agent"
+    }
+  },
+  "assertions": [
+    {
+      "assertion_id": "command-completed",
+      "method": "event_query",
+      "expectation": "The configured command exits successfully within its time and output budgets."
+    }
+  ],
+  "category": "recovery",
+  "environment": {
+    "fixture_id": "fixture://command-workspace",
+    "reset": "fresh_copy",
+    "services": []
+  },
+  "metadata": {
+    "author": "I-Ops Labs",
+    "source": "manual",
+    "explanation": "Manually authored process-boundary test; tool calls are not observed."
+  },
+  "mode": "isolated_execution",
+  "policy_constraints": [],
+  "requirements": {
+    "runner": "docker",
+    "runtime": "python>=3.11",
+    "adapter_features": [
+      "launch",
+      "observe",
+      "stop"
+    ]
+  },
+  "safety": {
+    "cleanup_required": true,
+    "filesystem_scope": "fixture_only",
+    "limits": {
+      "cpus": 1,
+      "max_output_bytes": 65536,
+      "memory_mb": 128,
+      "pids": 32,
+      "timeout_seconds": 3
+    },
+    "network": "off",
+    "permissions": [
+      "fixture_read",
+      "fixture_write"
+    ]
+  },
+  "scenario_id": "command-process-budget",
+  "schema_version": "0.1.0",
+  "target": {
+    "agent_id": "custom-command-agent",
+    "adapter_id": "isolated-command"
+  },
+  "title": "Isolated command process budget"
+}

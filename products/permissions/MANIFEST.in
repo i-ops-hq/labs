@@ -1,0 +1,2 @@
+include POLICY_SPEC.md CHANGELOG.md
+recursive-include examples *.json

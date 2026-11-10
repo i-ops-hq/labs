@@ -1,0 +1,9 @@
+FROM {base}
+COPY image_cleanup.py /opt/crashlab/image_cleanup.py
+RUN ["python", "-I", "/opt/crashlab/image_cleanup.py"]
+COPY agent.py driver.py verifier.py bootstrap.py crashlab_tools.py /opt/crashlab/
+COPY LICENSE.txt NOTICE.txt /opt/crashlab/
+{agent_copy}ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+USER 65532:65532
+WORKDIR /workspace
+ENTRYPOINT ["python", "-I", "/opt/crashlab/driver.py"]

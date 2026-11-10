@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iops-permissions:fixture-descriptor:0.1.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "template": {
+      "const": "protected-file-write"
+    },
+    "fixture_id": {
+      "type": "string",
+      "pattern": "^fixture://[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "adapter_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "protected_resource": {
+      "type": "string",
+      "pattern": "^fixture://[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "runtime": {
+      "const": "python>=3.11"
+    }
+  },
+  "required": [
+    "schema_version",
+    "template",
+    "fixture_id",
+    "agent_id",
+    "adapter_id",
+    "protected_resource",
+    "runtime"
+  ],
+  "additionalProperties": false
+}

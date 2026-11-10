@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iops-labs:contracts:capability-manifest:0.1.0",
+  "title": "capability-manifest",
+  "description": "Experimental foundation contract. Validation is not authorization or execution.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Non-semantic metadata only; MUST NOT affect execution or verdicts."
+    },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 64
+    },
+    "source_adapter": {
+      "type": "object",
+      "properties": {
+        "adapter_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      },
+      "required": [
+        "adapter_id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "action_kinds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "filesystem",
+                "process",
+                "network",
+                "api",
+                "other"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "resource_patterns": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "declared",
+              "configured",
+              "observed",
+              "inferred"
+            ]
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "approval_required": {
+            "type": "boolean"
+          },
+          "confidence": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "meaning": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              }
+            },
+            "required": [
+              "level",
+              "meaning"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "capability_id",
+          "action_kinds",
+          "resource_patterns",
+          "basis"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "observability": {
+          "type": "string",
+          "enum": [
+            "declared_only",
+            "hook_visible",
+            "tool_dispatch_instrumented",
+            "process_boundary",
+            "trace_import"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "observability",
+        "scope",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "identity_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "manifest_id",
+    "agent_id",
+    "captured_at",
+    "source_adapter",
+    "capabilities",
+    "unknowns",
+    "coverage"
+  ],
+  "additionalProperties": false
+}

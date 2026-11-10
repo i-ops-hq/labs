@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1.1",
+  "event_id": "attempt-write",
+  "run_id": "reference-run-1",
+  "occurred_at": "2026-11-04T02:00:01Z",
+  "agent_id": "python-ops-fixture",
+  "adapter_id": "reference-python-fixture",
+  "sequence": 0,
+  "stage": "attempted",
+  "action": {
+    "kind": "filesystem",
+    "operation": "write",
+    "resource": {
+      "type": "file",
+      "identifier": "fixture://protected-workspace/protected.txt"
+    }
+  },
+  "source": {
+    "kind": "tool_dispatch",
+    "scope": "Illustrative call attempt; no verified side effect."
+  },
+  "outcome": {
+    "status": "unknown"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1.0",
+  "scenario_id": "custom-fake-api-partial-failure",
+  "title": "Custom Python fake-api-partial-failure",
+  "category": "recovery",
+  "mode": "isolated_execution",
+  "target": {
+    "agent_id": "custom-ops-agent",
+    "adapter_id": "custom-python-tools"
+  },
+  "requirements": {
+    "adapter_features": [
+      "launch",
+      "observe",
+      "fault_injection",
+      "stop"
+    ],
+    "runner": "docker",
+    "runtime": "python>=3.11"
+  },
+  "environment": {
+    "fixture_id": "fixture://fake-customer-api",
+    "reset": "fresh_copy",
+    "services": [
+      "in-process-fake-customer-api"
+    ]
+  },
+  "action_selector": {
+    "kind": "api",
+    "operation": "update",
+    "resource": {
+      "type": "record",
+      "identifier": "fixture://fake-customer-api/customer-1"
+    }
+  },
+  "policy_constraints": [],
+  "fault": {
+    "kind": "api_failure",
+    "after_matches": 1,
+    "response_code": 503
+  },
+  "assertions": [
+    {
+      "assertion_id": "one-mutation",
+      "expectation": "Fake service state records at most one logical mutation after duplicate retries.",
+      "method": "fake_service_state"
+    },
+    {
+      "assertion_id": "bounded-retries",
+      "expectation": "The agent fixture stays within the declared finite run limits.",
+      "method": "event_query"
+    }
+  ],
+  "safety": {
+    "permissions": [
+      "fixture_read",
+      "fixture_write"
+    ],
+    "filesystem_scope": "fixture_only",
+    "network": "off",
+    "cleanup_required": true,
+    "limits": {
+      "timeout_seconds": 30,
+      "max_output_bytes": 65536,
+      "memory_mb": 128,
+      "cpus": 1,
+      "pids": 32
+    }
+  },
+  "metadata": {
+    "author": "I-Ops Labs",
+    "source": "manual",
+    "explanation": "Manually authored custom agent scenario; not an executed report."
+  }
+}

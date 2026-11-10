@@ -1,0 +1,80 @@
+{
+  "schema_version": "0.1.0",
+  "manifest_id": "declared-breadth-0.1",
+  "agent_id": "shell-capable-fixture",
+  "captured_at": "2026-11-09T00:00:00Z",
+  "source_adapter": {
+    "adapter_id": "hand-written-from-docs",
+    "version": "0.0.0"
+  },
+  "capabilities": [
+    {
+      "capability_id": "repo-file-write",
+      "action_kinds": [
+        "filesystem"
+      ],
+      "resource_patterns": [
+        "fixture://repo/*"
+      ],
+      "basis": "declared",
+      "constraints": [
+        "Files the operator adds to the session"
+      ],
+      "approval_required": false
+    },
+    {
+      "capability_id": "git-commit",
+      "action_kinds": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/git-commit"
+      ],
+      "basis": "configured",
+      "constraints": [
+        "Auto-commit is on by default and can be disabled by a flag"
+      ],
+      "approval_required": false
+    },
+    {
+      "capability_id": "run-test-command",
+      "action_kinds": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/test-cmd"
+      ],
+      "basis": "configured",
+      "constraints": [
+        "The operator supplies the command"
+      ],
+      "approval_required": false
+    },
+    {
+      "capability_id": "run-arbitrary-shell",
+      "action_kinds": [
+        "process"
+      ],
+      "resource_patterns": [
+        "fixture://process/*"
+      ],
+      "basis": "declared",
+      "constraints": [
+        "A slash command executes an operator-supplied shell command"
+      ],
+      "approval_required": false
+    }
+  ],
+  "unknowns": [
+    "What a model-authored edit does to files outside the session is not visible from declarations.",
+    "Whether a shell command performs network egress is not declared."
+  ],
+  "coverage": {
+    "observability": "declared_only",
+    "scope": "Capabilities as documented for a CLI, not as observed on an installed copy.",
+    "limitations": [
+      "Hand-written from documentation; no installed agent was inspected.",
+      "Effective host permissions of the invoking user are not modelled."
+    ]
+  }
+}

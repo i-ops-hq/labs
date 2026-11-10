@@ -1,0 +1,4 @@
+include RUNNER_SPEC.md AGENT_GUIDE.md
+include CHANGELOG.md
+recursive-include examples *.json *.py *.sh
+recursive-include scenarios *.json

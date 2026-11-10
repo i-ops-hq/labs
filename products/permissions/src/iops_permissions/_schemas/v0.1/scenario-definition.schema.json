@@ -1,0 +1,427 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:iops-labs:contracts:scenario-definition:0.1.0",
+  "title": "scenario-definition",
+  "description": "Experimental foundation contract. Validation is not authorization or execution.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "extensions": {
+      "type": "object",
+      "description": "Non-semantic metadata only; MUST NOT affect execution or verdicts."
+    },
+    "scenario_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "permission",
+        "fault",
+        "recovery"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "policy_simulation",
+        "isolated_execution"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "adapter_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        }
+      },
+      "required": [
+        "agent_id",
+        "adapter_id"
+      ],
+      "additionalProperties": false
+    },
+    "requirements": {
+      "type": "object",
+      "properties": {
+        "adapter_features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "inspect",
+              "launch",
+              "observe",
+              "pre_action_intercept",
+              "fault_injection",
+              "stop",
+              "filesystem_effects",
+              "network_effects",
+              "trace_import"
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "runner": {
+          "type": "string",
+          "enum": [
+            "none",
+            "docker"
+          ]
+        },
+        "runtime": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        }
+      },
+      "required": [
+        "adapter_features",
+        "runner",
+        "runtime"
+      ],
+      "additionalProperties": false
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "fixture_id": {
+          "type": "string",
+          "pattern": "^fixture://[A-Za-z0-9][A-Za-z0-9._/-]*$"
+        },
+        "reset": {
+          "const": "fresh_copy"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "fixture_id",
+        "reset",
+        "services"
+      ],
+      "additionalProperties": false
+    },
+    "action_selector": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "filesystem",
+            "process",
+            "network",
+            "api",
+            "other"
+          ]
+        },
+        "operation": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,63}$"
+        },
+        "resource": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "file",
+                "directory",
+                "process",
+                "endpoint",
+                "record",
+                "other"
+              ]
+            },
+            "identifier": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          },
+          "required": [
+            "type",
+            "identifier"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "kind",
+        "operation",
+        "resource"
+      ],
+      "additionalProperties": false
+    },
+    "policy_constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]{0,63}$"
+          },
+          "resource_pattern": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "decision": {
+            "type": "string",
+            "enum": [
+              "allowed",
+              "denied",
+              "requires_approval",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "operation",
+          "resource_pattern",
+          "decision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "fault": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "denied_operation",
+            "api_failure"
+          ]
+        },
+        "after_matches": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "response_code": {
+          "type": "integer",
+          "minimum": 400,
+          "maximum": 599
+        }
+      },
+      "required": [
+        "kind",
+        "after_matches"
+      ],
+      "additionalProperties": false
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assertion_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "expectation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "file_state",
+              "fake_service_state",
+              "event_query",
+              "policy_decision"
+            ]
+          }
+        },
+        "required": [
+          "assertion_id",
+          "expectation",
+          "method"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "safety": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "filesystem_scope": {
+          "const": "fixture_only"
+        },
+        "network": {
+          "const": "off"
+        },
+        "cleanup_required": {
+          "const": true
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "timeout_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "max_output_bytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1048576
+            },
+            "memory_mb": {
+              "type": "integer",
+              "minimum": 16,
+              "maximum": 4096
+            },
+            "cpus": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 4
+            },
+            "pids": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 256
+            }
+          },
+          "required": [
+            "timeout_seconds",
+            "max_output_bytes",
+            "memory_mb",
+            "cpus",
+            "pids"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "permissions",
+        "filesystem_scope",
+        "network",
+        "cleanup_required",
+        "limits"
+      ],
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "permission_simulator"
+          ]
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048
+        },
+        "manifest_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        }
+      },
+      "required": [
+        "author",
+        "source",
+        "explanation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "title",
+    "category",
+    "mode",
+    "requirements",
+    "environment",
+    "action_selector",
+    "policy_constraints",
+    "assertions",
+    "safety",
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "isolated_execution"
+          }
+        },
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "requirements": {
+            "properties": {
+              "runner": {
+                "const": "docker"
+              }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "requirements": {
+            "properties": {
+              "runner": {
+                "const": "none"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

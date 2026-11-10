@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77,<85", "wheel>=0.45,<1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iops-crashlab"
+version = "0.1.0a4"
+description = "Crash Lab: controlled local agent execution and evidence-linked reports"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.11"
+dependencies = [
+  "jsonschema>=4.23,<5", "rfc3339-validator>=0.1.4,<0.2", "referencing>=0.35,<1",
+]
+classifiers = ["Development Status :: 3 - Alpha"]
+
+[project.urls]
+Homepage = "https://github.com/i-ops-hq/labs/tree/main/products/crashlab"
+Repository = "https://github.com/i-ops-hq/labs"
+Issues = "https://github.com/i-ops-hq/labs/issues"
+Changelog = "https://github.com/i-ops-hq/labs/blob/main/products/crashlab/CHANGELOG.md"
+
+[project.scripts]
+iops-crashlab = "iops_crashlab.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3,<10"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["iops_crashlab*"]
+
+[tool.setuptools.package-data]
+iops_crashlab = ["py.typed", "_schemas/*/*.json", "reference/*.py", "reference/*.txt", "_scenarios/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib"
+faulthandler_timeout = 60

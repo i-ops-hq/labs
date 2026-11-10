@@ -1,0 +1,50 @@
+name: Local alpha validation
+
+# Dispatch only, deliberately: a hosted run costs money and wants a person to
+# decide it is worth spending. Everything it does is reproducible locally.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          version: '0.13.7'
+          enable-cache: false
+      - name: Prepare three independent environments
+        env:
+          TEST_PYTHON: ${{ matrix.python }}
+        run: |
+          uv sync --frozen --python "$TEST_PYTHON"
+          uv sync --project products/permissions --frozen --python "$TEST_PYTHON"
+          uv sync --project products/crashlab --frozen --python "$TEST_PYTHON"
+      - name: Contracts and standalone Permission Simulator
+        run: |
+          uv run --frozen python -m pytest -q
+          uv run --project products/permissions --frozen python -m pytest -q products/permissions/tests
+      - name: Actual controlled Docker cases
+        run: |
+          uv run --project products/crashlab --frozen iops-crashlab prepare --pull
+          uv run --project products/crashlab --frozen python -m pytest -q products/crashlab/tests --docker
+      - name: Lint, types and schema snapshots
+        run: |
+          uv run --frozen ruff check .
+          uv run --frozen ruff format --check .
+          uv run --frozen mypy
+          uv run --frozen python scripts/sync_contracts.py --check

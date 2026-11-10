@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1.0",
+  "request_id": "unmentioned-shell-request",
+  "agent_id": "shell-capable-fixture",
+  "action": {
+    "kind": "process",
+    "operation": "execute",
+    "resource": {
+      "type": "process",
+      "identifier": "fixture://process/curl-exfil"
+    }
+  }
+}

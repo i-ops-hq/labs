@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.1.0",
+  "agent_id": "custom-command-agent",
+  "kind": "command",
+  "argv": [
+    "/bin/sh",
+    "/opt/agent/agent.sh"
+  ],
+  "files": [
+    "agent.sh"
+  ]
+}
